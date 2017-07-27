@@ -13,3 +13,4 @@ install(FILES src/PCA9685.h DESTINATION include)
 
 add_executable(PCA9685_test test/main.cpp)
 target_link_libraries(PCA9685_test PCA9685)
+include_directories(src)
