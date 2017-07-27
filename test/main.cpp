@@ -13,9 +13,10 @@ void setServo(int channel, int pulse) {
     pca9685.setPWM(channel, 0, pulse);
 }
 
-void main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
     pca9685.init();
 
     setServo(0, 2200);
     setServo(1, 2200);
+    return 0;
 }
