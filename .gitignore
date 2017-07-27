@@ -7,3 +7,4 @@ CMakeCache.txt
 Makefile
 *.cbp
 install_manifest.txt
+.idea
