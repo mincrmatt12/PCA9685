@@ -18,5 +18,9 @@ int main(int argc, char* argv[]) {
 
     setServo(0, 2200);
     setServo(1, 2200);
+    while (true) {
+        ;
+    }
+
     return 0;
 }

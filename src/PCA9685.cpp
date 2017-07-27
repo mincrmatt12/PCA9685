@@ -18,7 +18,7 @@ PCA9685::PCA9685(int address, uint8_t bus) {
 }
 
 void PCA9685::init() {
-    this->i2cHandle = open("/dev/i2c-" + this->bus, O_RDWR);
+    this->i2cHandle = open("/dev/i2c-0", O_RDWR);
     if (this->i2cHandle < 0) {
         throw std::runtime_error("AAAAAAAHHHH the i2c bus couldn't open PANIC PANIC PANIC!!");
     }
