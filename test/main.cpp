@@ -16,8 +16,8 @@ void setServo(int channel, int pulse) {
 int main(int argc, char* argv[]) {
     pca9685.init();
 
-    setServo(0, 2200);
-    setServo(1, 2200);
+    setServo(0, 2100);
+    setServo(1, 2100);
     while (true) {
         ;
     }
