@@ -26,9 +26,9 @@ void PCA9685::init() {
         throw std::runtime_error("OH GOD! the darn thing isn't plugged in you silly head");
     }
 
+    this->setRegister(0x00, 0b00010000);
     this->setRegister(0xFE, 11);
-    uint8_t modus = 0b00010000;
-    this->setRegister(0x00, modus);
+    this->setRegister(0x00, 0);
 }
 
 void PCA9685::setRegister(uint8_t reg, uint8_t val) {
