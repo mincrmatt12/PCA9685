@@ -14,3 +14,7 @@ install(FILES src/PCA9685.h DESTINATION include)
 add_executable(PCA9685_test test/main.cpp)
 target_link_libraries(PCA9685_test PCA9685)
 include_directories(src)
+
+file(GLOB HEADERS src/*.h)
+install(FILES ${HEADERS} DESTINATION include/PCA9685)
+install(TARGETS PCA9685 DESTINATION lib/PCA9685)
