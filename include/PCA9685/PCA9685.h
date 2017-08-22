@@ -11,7 +11,6 @@ public:
     PCA9685(int address, uint8_t bus);
 
     void init();
-
     void setPWM(int channel, int on, int off);
 
 private:

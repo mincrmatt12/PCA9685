@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 2.8.3)
 project(PCA9685)
 
@@ -97,7 +96,7 @@ find_package(catkin REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
   LIBRARIES PCA9685
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
@@ -111,22 +110,22 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 
-## Declare a C++ library
-# add_library(PCA9685
-#   src/${PROJECT_NAME}/PCA9685.cpp
-# )
+set(CMAKE_CXX_STANDARD 14)
+
+add_library(PCA9685 src/PCA9685.cpp include/PCA9685/PCA9685.h)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(PCA9685 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(PCA9685 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-## Declare a C++ executable
-# add_executable(PCA9685_node src/PCA9685_node.cpp)
+add_executable(PCA9685_test test/main.cpp)
+include_directories(include)
+target_link_libraries(PCA9685_test PCA9685)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(PCA9685_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(PCA9685_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(PCA9685_node
@@ -148,18 +147,17 @@ catkin_package(
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS PCA9685 PCA9685_node
-#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS PCA9685
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+)
+
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h"
-#   PATTERN ".svn" EXCLUDE
-# )
+install(DIRECTORY include/PCA9685/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+)
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES
@@ -181,21 +179,4 @@ catkin_package(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-set(CMAKE_CXX_STANDARD 14)
-
-file(GLOB_RECURSE SOURCE_FILES src/PCA9685.cpp src/PCA9685.h)
-
-set(SOURCE_FILES ${SOURCE_FILES})
-add_library(PCA9685 ${SOURCE_FILES})
-
-install(TARGETS PCA9685 DESTINATION lib)
-install(FILES src/PCA9685.h DESTINATION include)
-
-add_executable(PCA9685_test test/main.cpp)
-target_link_libraries(PCA9685_test PCA9685)
-include_directories(src)
-
-file(GLOB HEADERS src/*.h)
-install(FILES ${HEADERS} DESTINATION include/PCA9685)
-install(TARGETS PCA9685 DESTINATION lib/PCA9685)
 

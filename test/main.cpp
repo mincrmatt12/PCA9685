@@ -2,7 +2,7 @@
 // Created by matthew on 26/07/17.
 //
 
-#include "PCA9685.h"
+#include "../include/PCA9685/PCA9685.h"
 
 PCA9685 pca9685(0x40, 0);
 

@@ -1,12 +1,8 @@
-#include "PCA9685.h"
+#include "../include/PCA9685/PCA9685.h"
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
 #include <unistd.h>
 #include <linux/i2c-dev.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <stdexcept>
@@ -18,7 +14,9 @@ PCA9685::PCA9685(int address, uint8_t bus) {
 }
 
 void PCA9685::init() {
-    this->i2cHandle = open("/dev/i2c-0", O_RDWR);
+    std::string filename = "/dev/i2c-";
+    filename += std::to_string(this->bus);
+    this->i2cHandle = open(filename.c_str(), O_RDWR);
     if (this->i2cHandle < 0) {
         throw std::runtime_error("AAAAAAAHHHH the i2c bus couldn't open PANIC PANIC PANIC!!");
     }
@@ -27,7 +25,7 @@ void PCA9685::init() {
     }
 
     this->setRegister(0x00, 0b00010000);
-    this->setRegister(0xFE, 11);
+    this->setRegister(0xFE, PRESCALE);
     this->setRegister(0x00, 0);
 }
 
@@ -59,11 +57,11 @@ void PCA9685::setPWM(int channel, int on, int off) {
     if (channel > 15) {
         throw std::domain_error("Channel is too large");
     }
-    uint8_t lowON = (uint8_t) (on & 0xFF);
-    uint8_t highON = (uint8_t) ((on >> 8) & 0xFF);
+    auto lowON = (uint8_t) (on & 0xFF);
+    auto highON = (uint8_t) ((on >> 8) & 0xFF);
 
-    uint8_t lowOFF = (uint8_t) (off & 0xFF);
-    uint8_t highOFF = (uint8_t) ((off >> 8) & 0xFF);
+    auto lowOFF = (uint8_t) (off & 0xFF);
+    auto highOFF = (uint8_t) ((off >> 8) & 0xFF);
 
     this->setRegister((uint8_t) (0x06 + (channel * 4)), lowON);
     this->setRegister((uint8_t) (0x06 + (channel * 4) + 1), highON);
