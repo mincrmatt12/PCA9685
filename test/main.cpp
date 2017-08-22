@@ -10,7 +10,7 @@ void setServo(int channel, int pulse) {
     int pulse_length = 1000000 / 500 / 4096;
     int pulse2 = pulse * 1000;
     pulse2 /= pulse_length;
-    pca9685.setPWM(channel, 0, pulse);
+    pca9685.setPWM(channel, 0, pulse2);
 }
 
 int main(int argc, char* argv[]) {
@@ -18,9 +18,6 @@ int main(int argc, char* argv[]) {
 
     setServo(0, 2100);
     setServo(1, 2100);
-    while (true) {
-        ;
-    }
 
-    return 0;
+    return 0; // very simple debug program, don't use in production
 }
