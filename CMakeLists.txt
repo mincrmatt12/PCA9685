@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 2.8.3)
 project(PCA9685)
 
@@ -97,7 +98,7 @@ find_package(catkin REQUIRED)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES PCA9685
+  LIBRARIES PCA9685
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -179,3 +180,22 @@ catkin_package(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+set(CMAKE_CXX_STANDARD 14)
+
+file(GLOB_RECURSE SOURCE_FILES src/PCA9685.cpp src/PCA9685.h)
+
+set(SOURCE_FILES ${SOURCE_FILES})
+add_library(PCA9685 ${SOURCE_FILES})
+
+install(TARGETS PCA9685 DESTINATION lib)
+install(FILES src/PCA9685.h DESTINATION include)
+
+add_executable(PCA9685_test test/main.cpp)
+target_link_libraries(PCA9685_test PCA9685)
+include_directories(src)
+
+file(GLOB HEADERS src/*.h)
+install(FILES ${HEADERS} DESTINATION include/PCA9685)
+install(TARGETS PCA9685 DESTINATION lib/PCA9685)
+
